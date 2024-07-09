@@ -15,17 +15,70 @@ async function run() {
     durable: true,
   });
 
-  const q = await channel.assertQueue("toy2", { exclusive: true });
+  const routingKey = "root.*.*";
 
-  console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
+  const q1 = await channel.assertQueue("", { exclusive: true });
+  const q2 = await channel.assertQueue("", { exclusive: true });
+  const q3 = await channel.assertQueue("", { exclusive: true });
+  const q4 = await channel.assertQueue("", { exclusive: true });
 
-  await channel.bindQueue(q.queue, exchangeFanout, "");
-  await channel.bindQueue(q.queue, exchangeTopic, "toy2");
+  console.log(
+    "1 [*] Waiting for messages in %s. To exit press CTRL+C",
+    q1.queue
+  );
+  console.log(
+    "2 [*] Waiting for messages in %s. To exit press CTRL+C",
+    q2.queue
+  );
+  console.log(
+    "3 [*] Waiting for messages in %s. To exit press CTRL+C",
+    q3.queue
+  );
+  console.log(
+    "4 [*] Waiting for messages in %s. To exit press CTRL+C",
+    q4.queue
+  );
 
-  await channel.consume(
-    q.queue,
+  await channel.bindQueue(q1.queue, exchangeFanout, "");
+  await channel.bindQueue(q2.queue, exchangeTopic, routingKey);
+  await channel.bindQueue(q3.queue, exchangeTopic, "root.test2");
+  await channel.bindQueue(q4.queue, exchangeTopic, "root.*.*.*");
+
+  channel.consume(
+    q1.queue,
     function (msg) {
-      console.log(" [x] Received %s", msg?.content.toString());
+      console.log("1 [x] Received %s", msg?.content.toString());
+    },
+    {
+      noAck: true,
+    }
+  );
+  channel.consume(
+    q2.queue,
+    function (msg) {
+      console.log("2 [x] Received %s", msg?.content.toString());
+    },
+    {
+      noAck: true,
+    }
+  );
+  channel.consume(
+    q3.queue,
+    function (msg) {
+      console.log("3 [x] Received %s", msg?.content.toString());
+    },
+    {
+      noAck: true,
+    }
+  );
+  channel.consume(
+    q4.queue,
+    function (msg) {
+      console.log(
+        "4 [x] Received %s",
+        msg?.content.toString(),
+        msg?.fields.routingKey
+      );
     },
     {
       noAck: true,
