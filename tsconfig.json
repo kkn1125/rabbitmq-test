@@ -18,6 +18,10 @@
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
     "resolveJsonModule": true,
 
+    "noImplicitAny": false,
+    "noEmit": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     /* Type Checking */
     "strict": true /* Enable all strict type-checking options. */,
 

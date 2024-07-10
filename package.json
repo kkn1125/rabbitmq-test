@@ -2,10 +2,12 @@
   "name": "rabbitmq",
   "scripts": {
     "dev": "ts-node server/index.ts",
-    "client": "ts-node client/index.ts"
+    "client": "ts-node client/index.ts",
+    "api": "nodemon apis/index.ts"
   },
   "dependencies": {
-    "amqplib": "^0.10.4"
+    "amqplib": "^0.10.4",
+    "express": "^4.19.2"
   },
   "devDependencies": {
     "@types/amqplib": "^0.10.5",
