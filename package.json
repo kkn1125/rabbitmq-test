@@ -1,18 +1,22 @@
 {
   "name": "rabbitmq",
   "scripts": {
-    "dev": "ts-node server/index.ts",
+    "server": "ts-node server/index.ts",
     "client": "ts-node client/index.ts",
-    "api": "nodemon apis/index.ts"
+    "api": "nodemon apis/index.ts",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run api\" \"npm run client\""
   },
   "dependencies": {
     "amqplib": "^0.10.4",
-    "express": "^4.19.2"
+    "express": "^4.21.1",
+    "ollama": "^0.5.9"
   },
   "devDependencies": {
     "@types/amqplib": "^0.10.5",
+    "@types/express": "^5.0.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.14.10",
+    "concurrently": "^9.0.1",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.0",
     "ts-lib": "^0.0.5",

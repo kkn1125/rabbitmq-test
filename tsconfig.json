@@ -28,9 +28,7 @@
     /* Completeness */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["server"],
+  "include": ["server", "apis", "client"],
   "exclude": ["node_modules"],
-  "ts-node": {
-    "files": true
-  }
+  "ts-node": {}
 }
